@@ -1,0 +1,11 @@
+server:
+  port: 9000
+
+spring:
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}/${MYSQL_DATABASE:javadev}
+    username: ${MYSQLDB_USER:root}
+    password: ${MYSQLDB_USER_PASSWORD:mohsin}
+  jpa:
+    hibernate:
+      ddl-auto: update
