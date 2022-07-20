@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-spring-demo
+  labels:
+    app: app-spring-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-spring-demo
+  template:
+    metadata:
+      labels:
+        app: app-spring-demo
+    spec:
+      containers:
+        - name: app-spring-demo
+          image: app-spring-demo
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 9000
+          env:
+            - name: MYSQL_HOST
+              value: mysql-service
+
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: MYSQL_DATABASE
+
+            - name: MYSQLDB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: MYSQLDB_USER
+
+            - name: MYSQLDB_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: MYSQLDB_USER_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+spec:
+  selector:
+    app: app-spring-demo
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 9000
+      nodePort: 30000
