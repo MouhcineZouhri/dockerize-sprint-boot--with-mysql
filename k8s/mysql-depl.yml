@@ -24,7 +24,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: app-secret
-                  key: MYSQLDB_USER_PASSWORD
+                  key: MYSQLDB_ROOT_PASSWORD
 
             - name: MYSQL_USER
               valueFrom:
@@ -33,16 +33,16 @@ spec:
                   key: MYSQLDB_USER
 
             - name: MYSQL_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    name: app-secret
-                    key: MYSQLDB_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: MYSQLDB_USER_PASSWORD
 
             - name: MYSQL_DATABASE
-                valueFrom:
-                  secretKeyRef:
-                    name: app-secret
-                    key: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: MYSQLDB_DATABASE
 
 ---
 apiVersion: v1

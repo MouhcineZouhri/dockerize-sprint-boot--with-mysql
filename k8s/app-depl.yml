@@ -22,13 +22,16 @@ spec:
           - containerPort: 9000
           env:
             - name: MYSQL_HOST
-              value: mysql-service
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config-map
+                  key: DATABASE_URL
 
             - name: MYSQL_DATABASE
               valueFrom:
                 secretKeyRef:
                   name: app-secret
-                  key: MYSQL_DATABASE
+                  key: MYSQLDB_DATABASE
 
             - name: MYSQLDB_USER
               valueFrom:
